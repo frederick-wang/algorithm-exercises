@@ -1,40 +1,21 @@
 # P4924 [1007]魔法少女小Scarlet https://www.luogu.com.cn/problem/P4924
-# 用 PyPy3 提交，不然会超时
+# type: ignore
+
+import numpy as np
 
 n, m = map(int, input().split())
-N2 = n**2
-s = [i + 1 for i in range(N2)]
-sub_s = [0] * N2
-
-
-def rotate(x: int, y: int, r: int, z: int):
-    l = 2 * r + 1
-    x1 = x - r
-    x2 = x + r
-    y1 = y - r
-    y2 = y + r
-    for i in range(l):
-        for j in range(l):
-            old_x = x1 + i
-            old_y = y1 + j
-            sub_s[i * l + j] = s[old_x * n + old_y]
-    if z:
-        for i in range(l):
-            for j in range(l):
-                new_x = x2 - j
-                new_y = y1 + i
-                s[new_x * n + new_y] = sub_s[i * l + j]
-    else:
-        for i in range(l):
-            for j in range(l):
-                new_x = x1 + j
-                new_y = y2 - i
-                s[new_x * n + new_y] = sub_s[i * l + j]
-
+s = np.arange(1, n**2 + 1, dtype=np.uint32).reshape(n, n)
 
 for _ in range(m):
     x, y, r, z = map(int, input().split())
-    rotate(x - 1, y - 1, r, z)
+    x -= 1
+    y -= 1
+    x1 = x - r
+    x2 = x + r + 1
+    y1 = y - r
+    y2 = y + r + 1
+    sub_s = s[x1:x2, y1:y2]
+    s[x1:x2, y1:y2] = sub_s.T[::-1, ::] if z else sub_s.T[::, ::-1]
 
-for i in range(N2):
-    print(s[i], end='\n' if i % n == n - 1 else ' ')
+for row in s:
+    print(' '.join(map(str, row)))

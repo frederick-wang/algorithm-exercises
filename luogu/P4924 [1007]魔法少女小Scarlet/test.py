@@ -15,7 +15,7 @@ for _ in range(m):
     y1 = y - r
     y2 = y + r + 1
     sub_s = s[x1:x2, y1:y2]
-    s[x1:x2, y1:y2] = sub_s.T[::-1, ::] if z else sub_s.T[::, ::-1]
+    s[x1:x2, y1:y2] = sub_s.T[::-1] if z else sub_s.T[:, ::-1]
 
 for row in s:
     print(' '.join(map(str, row)))

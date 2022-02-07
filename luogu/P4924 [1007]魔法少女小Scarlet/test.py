@@ -1,14 +1,10 @@
 # P4924 [1007]魔法少女小Scarlet https://www.luogu.com.cn/problem/P4924
 # 用 PyPy3 提交，不然会超时
 
-from array import array
-
 n, m = map(int, input().split())
 N2 = n**2
-s = array('I', [0]) * N2
-sub_s = array('I', [0]) * N2
-for i in range(N2):
-    s[i] = i + 1
+s = [i + 1 for i in range(N2)]
+sub_s = [0] * N2
 
 
 def rotate(x: int, y: int, r: int, z: int):

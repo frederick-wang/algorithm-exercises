@@ -1,14 +1,14 @@
 # P1152 欢乐的跳 https://www.luogu.com.cn/problem/P1152
 
-from typing import Dict
+from typing import Set
 
 raw = map(int, input().split())
 n, nums = next(raw), list(raw)
 
-diffs: Dict[int, bool] = {}
+diffs: Set[int] = set()
 for i in range(1, n):
     diff = abs(nums[i] - nums[i - 1])
-    diffs[diff] = True
+    diffs.add(diff)
 
 is_jolly = True
 for i in range(1, n):

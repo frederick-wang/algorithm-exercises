@@ -31,13 +31,16 @@ for i in range(N):
         if c == '=':
             fx, fy = i, j
         if c.isalpha():
+            p = (i, j)
+            c_i = device_i[c]
             if c in device:
-                device[c][device_i[c]] = (i, j)
-                device_idx[c][(i, j)] = device_i[c]
+                device[c][c_i] = p
+                device_idx[c][p] = c_i
             else:
-                device[c] = {device_i[c]: (i, j)}
-                device_idx[c] = {(i, j): device_i[c]}
+                device[c] = {c_i: p}
+                device_idx[c] = {p: c_i}
                 device_i[c] += 1
+device_enabled = {c: len(device[c]) > 1 for c in device}
 
 
 def bfs() -> int:
@@ -45,44 +48,25 @@ def bfs() -> int:
     d[sx][sy] = 0
 
     while len(que):
-        # print(' ' * 7, end='')
-        # for i in range(M):
-        #     print('%06d' % i, end=' ')
-        # print()
-        # for r_i, row in enumerate(d):
-        #     for c_i, col in enumerate(row):
-        #         if c_i == 0:
-        #             print('%06d' % r_i, end=' ')
-        #         print('%03d(%s)' % (col, m[r_i][c_i]), end=' ')
-        #     print()
-        # print()
         p = que.popleft()
-        # print('-:', p, '%03d(%s)' % (d[p[0]][p[1]], m[p[0]][p[1]]))
         px, py = p
         if p == (fx, fy):
             return d[fx][fy]
         for i in range(4):
             nx, ny = px + dx[i], py + dy[i]
+            np = (nx, ny)
             c = m[nx][ny]
-            new_d = d[px][py] + 1
             if 0 <= nx < N and 0 <= ny < M and c != '#':
-                if c.isalpha() and len(device[c]) > 1:
-                    if (nx, ny) not in device_times:
-                        # print(c, device[c], len(device[c]))
-                        n2x, n2y = device[c][1 - device_idx[c][(nx, ny)]]
-                        que.append((n2x, n2y))
-                        d[n2x][n2y] = new_d
-                        device_times[(nx, ny)] = True
-                        # print('+:', (n2x, n2y),
-                        #       '%03d(%s)' % (d[n2x][n2y], m[n2x][n2y]))
-                        # print('+:', (nx, ny),
-                        #       '%03d(%s)' % (d[nx][ny], m[nx][ny]))
+                if c.isalpha() and device_enabled[c]:
+                    if np not in device_times:
+                        nnx, nny = device[c][1 - device_idx[c][np]]
+                        que.append((nnx, nny))
+                        d[nnx][nny] = d[px][py] + 1
+                        device_times[np] = True
                 else:
-                    if new_d < d[nx][ny]:
-                        que.append((nx, ny))
-                        d[nx][ny] = new_d
-                        # print('+:', (nx, ny),
-                        #       '%03d(%s)' % (d[nx][ny], m[nx][ny]))
+                    if INF == d[nx][ny]:
+                        que.append(np)
+                        d[nx][ny] = d[px][py] + 1
     return d[fx][fy]
 
 

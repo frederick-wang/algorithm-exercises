@@ -1,32 +1,32 @@
 # P1551 亲戚 https://www.luogu.com.cn/problem/P1551
-
-from typing import Dict
+# 并查集，使用了「启发式合并」与「路径压缩」，详见 https://oi-wiki.org/ds/dsu/
 
 N, M, P = map(int, input().split())
 
-d: Dict[int, int] = {}
+# 子树大小记录
+tree_size = [1] * (N + 1)
+fa = [i for i in range(N + 1)]
 
-idx = 0
+
+def find(x: int) -> int:
+    if x != fa[x]:
+        fa[x] = find(fa[x])
+    return fa[x]
+
+
 for _ in range(M):
-    a, b = map(int, input().split())
-    if a not in d and b not in d:
-        d[a] = idx
-        d[b] = idx
-        idx += 1
-    elif a in d and b not in d:
-        i = d[a]
-        d[b] = i
-    elif a not in d and b in d:
-        i = d[b]
-        d[a] = i
-    else:
-        i_a = d[a]
-        i_b = d[b]
-        for num, i in d.items():
-            if i == i_b:
-                d[num] = i_a
+    x, y = map(int, input().split())
+    x = find(x)
+    y = find(y)
+    # 启发式合并
+    if x != y:
+        # 保证 x <= y
+        if tree_size[x] > tree_size[y]:
+            x, y = y, x
+        fa[x] = y
+        # 只需要更新根节点的子树大小，子节点的子树大小不会再被用到了，因而不用更新
+        tree_size[y] += tree_size[x]
 
 for _ in range(P):
-    a, b = map(int, input().split())
-    # NOTE: 自己和自己也算亲戚
-    print('Yes' if a == b or d.get(a, -1) == d.get(b, -2) else 'No')
+    x, y = map(int, input().split())
+    print('Yes' if find(x) == find(y) else 'No')

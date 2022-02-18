@@ -1,9 +1,8 @@
 # P1739 表达式括号匹配 https://www.luogu.com.cn/problem/P1739
 
-from collections import deque
-from typing import Deque
+from typing import List
 
-que: Deque[bool] = deque()
+que: List[bool] = []
 
 try:
     s = input()

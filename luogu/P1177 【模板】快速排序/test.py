@@ -1,7 +1,6 @@
 # P1177 【模板】快速排序 https://www.luogu.com.cn/problem/P1177
 
 from typing import List
-import random
 
 N = int(input())
 nums = list(map(int, input().split()))[:N]
@@ -11,8 +10,8 @@ def quick_sort(arr: List[int], left: int, right: int):
     if left >= right:
         return
 
-    # 一定要随机选一个 pivot，而不是直接用 arr[left]，否则如果数据本身有序，会巨慢
-    pivot_idx = random.randint(left, right)
+    # 一定要不要直接用 arr[left]，否则如果数据本身有序，会巨慢
+    pivot_idx = (left + right) // 2
     pivot = arr[pivot_idx]
     arr[left], arr[pivot_idx] = arr[pivot_idx], arr[left]
     i, j, k = left + 1, left, right + 1

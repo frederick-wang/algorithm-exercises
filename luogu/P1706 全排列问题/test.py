@@ -3,5 +3,5 @@
 from itertools import permutations
 
 N = int(input())
-
-print('\n'.join(map(lambda x: ('% 5d' * N) % x, permutations(range(1, N + 1)))))
+templ = '% 5d' * N
+print('\n'.join(map(lambda x: templ % x, permutations(range(1, N + 1)))))

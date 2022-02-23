@@ -3,7 +3,5 @@
 from itertools import combinations
 
 N, R = map(int, input().split())
-
-print('\n'.join(
-    map(lambda x: ''.join(map('{: 3d}'.format, x)),
-        combinations(range(1, N + 1), R))))
+templ = '% 3d' * R
+print('\n'.join(map(lambda x: templ % x, combinations(range(1, N + 1), R))))

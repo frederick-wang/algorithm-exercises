@@ -1,7 +1,7 @@
 # P1164 小A点菜 https://www.luogu.com.cn/problem/P1164
 # https://www.luogu.com.cn/record/70374951
 
-from typing import Dict, List
+from typing import List
 
 N, M = map(int, input().split())
 price: List[int] = []

@@ -1,4 +1,5 @@
 # P1106 删数问题 https://www.luogu.com.cn/problem/P1106
+# https://www.luogu.com.cn/record/70776430
 
 nums = list(map(int, input().strip()))
 K = int(input())

@@ -18,15 +18,11 @@ def estimate(min_span: int) -> int:
 
 lower_bound = 1
 upper_bound = L
-
 while lower_bound <= upper_bound:
     m = (lower_bound + upper_bound) >> 1
     estimated = estimate(m)
-    # print(f'{lower_bound=}, {upper_bound=}, {m=}, {estimated=}')
     if estimated <= M:
         lower_bound = m + 1
-        # print(f'lower_bound -> {lower_bound}')
     else:
         upper_bound = m - 1
-        # print(f'upper_bound -> {upper_bound}')
 print(upper_bound)

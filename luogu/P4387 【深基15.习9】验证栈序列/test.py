@@ -6,17 +6,15 @@ from typing import Deque
 Q = int(input())
 for _ in range(Q):
     N = int(input())
-    seq_in = deque(map(int, input().split()))
+    seq_in = map(int, input().split())
     seq_out = deque(map(int, input().split()))
     stack: Deque[int] = deque()
-    while len(seq_out):
-        if len(stack) and stack[0] == seq_out[0]:
+    for i in seq_in:
+        stack.appendleft(i)
+        while len(stack) and stack[0] == seq_out[0]:
             stack.popleft()
             seq_out.popleft()
-        elif len(seq_in):
-            stack.appendleft(seq_in.popleft())
-        else:
-            print('No')
-            break
+    if len(stack):
+        print('No')
     else:
         print('Yes')

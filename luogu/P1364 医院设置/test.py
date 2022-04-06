@@ -1,6 +1,6 @@
 # P1364 医院设置 https://www.luogu.com.cn/problem/P1364
 
-from typing import List, Optional, Tuple
+from typing import Iterator, List, Optional, Tuple
 
 
 class Edge:
@@ -12,7 +12,10 @@ class Edge:
         self.cost = cost
 
     def __repr__(self) -> str:
-        return '{to=%s, cost=%s}' % (self.to, self.cost)
+        return f'Edge(to={self.to}, cost={self.cost})'
+
+    def __iter__(self) -> Iterator[int]:
+        return iter([self.to, self.cost])
 
 
 N = int(input())
@@ -42,7 +45,7 @@ for f, t in edges:
 
 def dfs(x: int, d: int) -> int:
     vis[x] = True
-    return sum(e.cost * d + dfs(e.to, d + 1) for e in p[x] if not vis[e.to])
+    return sum(cost * d + dfs(to, d + 1) for to, cost in p[x] if not vis[to])
 
 
 min_distance = int(1e9)

@@ -1,4 +1,5 @@
 # P1855 榨取kkksc03 https://www.luogu.com.cn/problem/P1855
+# 用 PyPy3 提交
 
 from itertools import product
 

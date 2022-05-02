@@ -2,7 +2,6 @@
 
 N, M = map(int, input().split())
 dv = ((2, 1), (1, 2), (-1, 2), (-2, 1))
-board = [[0] * (M + 1) for _ in range(N + 1)]
 mem = [[-1] * (M + 1) for _ in range(N + 1)]
 
 
@@ -14,10 +13,8 @@ def dfs(x: int, y: int) -> int:
         for dx, dy in dv:
             nx = x + dx
             ny = y + dy
-            if 0 <= nx <= N and 0 <= ny <= M and not board[nx][ny]:
-                board[nx][ny] = 1
+            if 0 <= nx <= N and 0 <= ny <= M:
                 mem[x][y] += dfs(nx, ny)
-                board[nx][ny] = 0
     return mem[x][y]
 
 

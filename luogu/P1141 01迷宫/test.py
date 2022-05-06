@@ -30,9 +30,9 @@ def bfs(start_x: int, start_y: int) -> int:
                 ans += 1
                 que.append((nx, ny))
                 to_update.append((nx, ny))
-    while len(to_update):
-        x, y = to_update.popleft()
+    for x, y in to_update:
         vis[x][y] = ans
+    to_update.clear()
     return ans
 
 

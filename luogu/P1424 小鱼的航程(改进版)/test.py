@@ -8,5 +8,4 @@ while n:
         ans += 250
     x = x + 1 if x < 7 else 1
     n -= 1
-
 print(ans)

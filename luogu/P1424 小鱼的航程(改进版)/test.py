@@ -2,11 +2,11 @@
 
 x, n = map(int, input().split())
 
-sum = 0
+ans = 0
 while n:
     if 1 <= x <= 5:
-        sum += 250
+        ans += 250
     x = x + 1 if x < 7 else 1
     n -= 1
 
-print(sum)
+print(ans)

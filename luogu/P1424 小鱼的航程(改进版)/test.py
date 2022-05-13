@@ -3,9 +3,8 @@
 x, n = map(int, input().split())
 
 ans = 0
-while n:
+for _ in range(n):
     if 1 <= x <= 5:
         ans += 250
     x = x + 1 if x < 7 else 1
-    n -= 1
 print(ans)

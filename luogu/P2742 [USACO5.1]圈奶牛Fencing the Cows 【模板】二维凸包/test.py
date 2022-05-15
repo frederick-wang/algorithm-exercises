@@ -24,10 +24,11 @@ def get_distance(i: int) -> float:
                 (p[stk[i]][1] - p[stk[i - 1]][1])**2)
 
 
-def add_point(i: int):
+def add_point(min_num: int, i: int):
     '''将 p[i] 添加到 stk 栈顶
 
     Args:
+        min_num (int): stk 中最少要有的点数
         i (int): p 中的第 i 个点
     '''
     global p, stk
@@ -35,7 +36,7 @@ def add_point(i: int):
     # y2: p[i][1] - p[stk[-1]][1]
     # y1: p[stk[-1]][1] - p[stk[-2]][1]
     # x2: p[i][0] - p[stk[-1]][0]
-    while len(stk) > 1 and (p[stk[-1]][0] - p[stk[-2]][0]) * (
+    while len(stk) > min_num and (p[stk[-1]][0] - p[stk[-2]][0]) * (
             p[i][1] - p[stk[-1]][1]) - (p[stk[-1]][1] - p[stk[-2]][1]) * (
                 p[i][0] - p[stk[-1]][0]) <= 0:
         stk.pop()
@@ -43,13 +44,12 @@ def add_point(i: int):
 
 
 # 寻找下凸壳
-stk.append(0)
-for i in range(1, N):
-    add_point(i)
+for i in range(N):
+    add_point(1, i)
 # 寻找上凸壳
-stk.append(N - 2)
-for i in range(N - 3, -1, -1):  # 注意这里结束是 0，会将 p[0] 第二次添加到 stk 栈顶，方便计算周长
-    add_point(i)
+m = len(stk)
+for i in range(N - 2, -1, -1):  # 注意这里结束是 0，会将 p[0] 第二次添加到 stk 栈顶，方便计算周长
+    add_point(m, i)
 
 if len(stk) == 2:  # 如果所有点是一条直线，stk 中只有两个 p[0]，直接计算首尾两点之间的距离再乘 2
     ans = 2 * sqrt((p[0][0] - p[-1][0])**2 + (p[0][1] - p[-1][1])**2)
